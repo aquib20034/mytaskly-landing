@@ -23,13 +23,15 @@ any secondary dev servers.
 
 ## Environment variables
 
-Only two are read — both public. Copy `.env.example` to `.env.local` if you
-want to override.
+All are public. Copy `.env.example` to `.env.local` if you want to override.
 
-| Key                     | Default                   | Purpose                       |
-| ----------------------- | ------------------------- | ----------------------------- |
-| `NEXT_PUBLIC_APP_URL`   | `https://app.mytaskly.io` | Used for CTA links (/register, /login) |
-| `NEXT_PUBLIC_SITE_URL`  | `https://mytaskly.io`     | Used for Open Graph metadata  |
+| Key                     | Local default                   | Production                       | Purpose                        |
+| ----------------------- | ------------------------------- | -------------------------------- | ------------------------------ |
+| `NEXT_PUBLIC_APP_URL`   | `http://localhost:3000`         | `https://app.mytaskly.io`        | CTA links (/register, /login)  |
+| `NEXT_PUBLIC_API_URL`   | `http://127.0.0.1:8000/api/v1`  | your API base + `/api/v1`        | Fetch active plans for pricing |
+| `NEXT_PUBLIC_SITE_URL`  | `http://localhost:3002`         | `https://mytaskly.io`            | Open Graph metadata            |
+
+Copy `.env.example` → `.env.local` for local overrides. Restart `npm run dev` after changing env vars.
 
 ## Vercel deploy
 
@@ -37,7 +39,7 @@ want to override.
 2. **Root Directory:** `apps/landing`
 3. **Framework Preset:** Next.js (auto-detected)
 4. **Build Command / Install Command / Output Directory:** all defaults.
-5. **Environment Variables (Production):** set the two above.
+5. **Environment Variables (Production):** set all three above (`NEXT_PUBLIC_API_URL` should point at the production API, e.g. `https://api.mytaskly.io/api/v1`).
 6. **Domains:** add `mytaskly.io` and `www.mytaskly.io` (Vercel will give
    you the A / CNAME targets — add them at Hostinger, see
    `context/deployment/02_DOMAIN_DNS_HOSTINGER.md`).
@@ -60,13 +62,16 @@ apps/landing/
 │   │   ├── Hero.tsx
 │   │   ├── Modules.tsx      ← PMS / CRM / HR
 │   │   ├── Features.tsx
-│   │   ├── Pricing.tsx      ← $49 / $99 / $199
+│   │   ├── Pricing.tsx      ← server fetch of public plans
+│   │   ├── PricingCards.tsx ← monthly/yearly toggle + cards
 │   │   ├── Faq.tsx
 │   │   ├── Cta.tsx
 │   │   ├── Footer.tsx
 │   │   └── Logo.tsx
 │   └── lib/
-│       └── config.ts        ← APP_URL / REGISTER_URL / LOGIN_URL
+│       ├── config.ts        ← APP_URL / API_URL / buildRegisterUrl
+│       ├── api/plans.ts     ← GET /plans
+│       └── types/plan.ts
 ├── next.config.ts
 ├── tailwind handled by @tailwindcss/postcss (no tailwind.config)
 └── tsconfig.json
