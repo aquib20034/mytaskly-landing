@@ -47,7 +47,9 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-navy-100 pt-6 text-xs text-ink-muted sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} MyTaskly. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} MyTaskly. All rights reserved.
+          </span>
           <span>Made for teams that ship.</span>
         </div>
       </div>
