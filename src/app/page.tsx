@@ -7,6 +7,9 @@ import { Faq } from "@/components/Faq";
 import { Cta } from "@/components/Cta";
 import { Footer } from "@/components/Footer";
 
+/** Always hit the API for plans — do not bake a failed pricing fetch into static HTML. */
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   return (
     <>

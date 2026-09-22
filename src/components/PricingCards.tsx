@@ -95,12 +95,12 @@ function PricingCard({
 
   if (isFeatured) {
     return (
-      <div className="relative flex h-full md:-my-4">
+      <div className="relative flex flex-col self-stretch">
         <div
           className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-r from-navy-400 via-accent-500 to-navy-400 opacity-90 blur-[2px] animate-sheen"
           aria-hidden
         />
-        <div className="relative flex h-full w-full flex-col rounded-2xl bg-navy-950 p-8 text-white shadow-glow">
+        <div className="relative flex flex-1 flex-col rounded-2xl bg-navy-950 p-8 text-white shadow-glow">
           <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gradient-to-r from-navy-300 to-accent-400 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-navy-950 shadow-cta">
             Most popular
           </span>
@@ -111,7 +111,7 @@ function PricingCard({
   }
 
   return (
-    <div className="group relative flex h-full flex-col rounded-2xl border border-navy-100 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-navy-300 hover:shadow-card-hover">
+    <div className="group relative flex flex-col self-stretch rounded-2xl border border-navy-100 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-navy-300 hover:shadow-card-hover">
       <CardBody plan={plan} billingInterval={billingInterval} />
     </div>
   );
@@ -151,7 +151,7 @@ function CardBody({
     : `Start with ${planName}`;
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex flex-1 flex-col">
       <div>
         <h3
           className={`text-lg font-semibold ${
@@ -207,7 +207,7 @@ function CardBody({
       </div>
 
       <ul
-        className={`mt-6 space-y-3 text-sm ${
+        className={`mt-6 flex-1 space-y-3 text-sm ${
           isFeatured ? "text-navy-100/90" : "text-ink"
         }`}
       >
@@ -223,7 +223,7 @@ function CardBody({
         ))}
       </ul>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-8 shrink-0">
         <a
           href={ctaHref}
           className={

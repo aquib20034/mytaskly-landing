@@ -3,10 +3,11 @@ import { LOGIN_URL, REGISTER_URL } from "@/lib/config";
 
 const links = {
   Product: [
-    { label: "Features", href: "#features" },
-    { label: "Modules", href: "#modules" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Features", href: "/#features" },
+    { label: "Modules", href: "/#modules" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Changelog", href: "/changelog" },
+    { label: "FAQ", href: "/#faq" },
   ],
   Account: [
     { label: "Sign in", href: LOGIN_URL },

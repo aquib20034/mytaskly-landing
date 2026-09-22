@@ -8,8 +8,11 @@ export async function Pricing() {
 
   try {
     plans = await fetchPublicPlans();
-  } catch {
+  } catch (err) {
     loadError = true;
+    if (process.env.NODE_ENV !== "production") {
+      console.error("[Pricing] failed to load plans:", err);
+    }
   }
 
   return (
@@ -32,6 +35,14 @@ export async function Pricing() {
           <div className="mt-16 text-center">
             <p className="text-ink-muted">
               Unable to load pricing right now.
+            </p>
+            <p className="mt-2 text-sm text-ink-muted">
+              Make sure the API is running at{" "}
+              <code className="rounded bg-navy-50 px-1.5 py-0.5 text-xs">
+                {process.env.NEXT_PUBLIC_API_URL ||
+                  "http://127.0.0.1:8000/api/v1"}
+              </code>
+              , then refresh.
             </p>
             <a
               href={REGISTER_URL}

@@ -10,16 +10,19 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium text-ink-muted md:flex">
-          <a href="#features" className="hover:text-navy-900">
+          <a href="/#features" className="hover:text-navy-900">
             Features
           </a>
-          <a href="#modules" className="hover:text-navy-900">
+          <a href="/#modules" className="hover:text-navy-900">
             Modules
           </a>
-          <a href="#pricing" className="hover:text-navy-900">
+          <a href="/#pricing" className="hover:text-navy-900">
             Pricing
           </a>
-          <a href="#faq" className="hover:text-navy-900">
+          <a href="/changelog" className="hover:text-navy-900">
+            Changelog
+          </a>
+          <a href="/#faq" className="hover:text-navy-900">
             FAQ
           </a>
         </nav>
