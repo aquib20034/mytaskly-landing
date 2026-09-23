@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: "MyTaskly — The operating system for software houses",
   description:
     "One platform for Project Management, CRM, and HR. Built for software houses and small businesses that are done paying for three tools that don't talk to each other.",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.png",
+  },
   openGraph: {
     title: "MyTaskly — The operating system for software houses",
     description:
@@ -21,10 +29,10 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "MyTaskly",
     type: "website",
-    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "MyTaskly" }],
+    images: [{ url: "/logo.png", width: 512, height: 512, alt: "MyTaskly" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "MyTaskly — The operating system for software houses",
     description:
       "One platform for Project Management, CRM, and HR. Built for software houses and small businesses.",

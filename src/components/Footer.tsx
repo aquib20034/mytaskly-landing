@@ -3,10 +3,11 @@ import { LOGIN_URL, REGISTER_URL } from "@/lib/config";
 
 const links = {
   Product: [
-    { label: "Features", href: "#features" },
-    { label: "Modules", href: "#modules" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Features", href: "/#features" },
+    { label: "Modules", href: "/#modules" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Changelog", href: "/changelog" },
+    { label: "FAQ", href: "/#faq" },
   ],
   Account: [
     { label: "Sign in", href: LOGIN_URL },
@@ -47,7 +48,9 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-navy-100 pt-6 text-xs text-ink-muted sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} MyTaskly. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} MyTaskly. All rights reserved.
+          </span>
           <span>Made for teams that ship.</span>
         </div>
       </div>
