@@ -25,8 +25,6 @@ const ribbon = [
   "Client portal",
 ];
 
-const hasPlatformImage = fs.existsSync(path.join(process.cwd(), "public", "platform.png"));
-
 const tones = [
   "bg-[#e8f1ff]",
   "bg-[#efe8ff]",
@@ -41,6 +39,8 @@ export default async function Page() {
   } catch {
     plans = [];
   }
+
+  const hasPlatformImage = fs.existsSync(path.join(process.cwd(), "public", "platform.png"));
 
   return (
     <>
