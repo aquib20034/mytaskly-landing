@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = productMetadata(
   "Pricing",
-  "Starter is projects, chat, and a client portal. Growth adds CRM, HR, resources, and developer tools. Flat workspace prices, billed in USD.",
+  "Current MyTaskly workspace plans. Names and prices are loaded from the live plans list.",
   "/pricing",
 );
 

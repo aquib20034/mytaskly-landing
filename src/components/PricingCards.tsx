@@ -6,7 +6,6 @@ import {
   buildRegisterUrl,
   type BillingInterval,
 } from "@/lib/config";
-import { planPresentation, sortPlansForDisplay } from "@/lib/packaging";
 import type { Plan } from "@/lib/types/plan";
 
 function formatPrice(value: string | null, currency: string) {
@@ -68,7 +67,7 @@ export function PricingCards({ plans }: { plans: Plan[] }) {
           anyYearly ? "mt-10" : "mt-16"
         }`}
       >
-        {sortPlansForDisplay(plans).map((plan) => (
+        {plans.map((plan) => (
           <PricingCard
             key={plan.id}
             plan={plan}
@@ -87,7 +86,7 @@ function PricingCard({
   plan: Plan;
   billingInterval: BillingInterval;
 }) {
-  const isFeatured = planPresentation(plan).featured;
+  const isFeatured = plan.is_popular;
 
   if (isFeatured) {
     return (
@@ -122,10 +121,11 @@ function CardBody({
   billingInterval: BillingInterval;
   isFeatured?: boolean;
 }) {
-  const presentation = planPresentation(plan);
-  const featureItems = presentation.features;
+  const featureItems = (Array.isArray(plan.features) ? plan.features : [])
+    .map((feature) => feature.trim())
+    .filter((feature) => feature.length > 0);
   const planName = plan.name.trim() || "Plan";
-  const planDescription = presentation.description;
+  const planDescription = plan.description?.trim() ?? "";
   const useYearly =
     billingInterval === "yearly" &&
     planHasYearly(plan) &&
