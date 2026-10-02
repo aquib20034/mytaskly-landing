@@ -44,11 +44,20 @@ function parsePlansPayload(data: unknown): Plan[] {
  * Always fresh (no ISR cache) so a temporary API outage does not stick
  * "Unable to load pricing" on the homepage.
  */
+export function plansEndpoint() {
+  const base = API_URL.trim().replace(/\/+$/, "");
+  return `${base}/plans`;
+}
+
 export async function fetchPublicPlans(): Promise<Plan[]> {
-  const url = `${API_URL}/plans`;
+  const url = plansEndpoint();
   const res = await fetch(url, {
     cache: "no-store",
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "MyTasklyLanding/1.0 (+https://mytaskly.io)",
+    },
+    signal: AbortSignal.timeout(8000),
   });
 
   if (!res.ok) {

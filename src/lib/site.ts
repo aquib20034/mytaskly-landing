@@ -99,7 +99,7 @@ export const faqs = [
   },
   {
     q: "How does MyTaskly save money?",
-    a: "Separate apps charge per person. Four tools at typical list prices add up to several times one workspace. MyTaskly bills the plan you choose for the modules you enable, and people, clients, and permissions are shared.",
+    a: "Starter is a flat workspace price for projects, chat, and the client portal. It runs ahead of a board plus chat from about three people. Growth adds CRM and HR, which is the plan that replaces HubSpot and BambooHR. One Jira seat by itself still lists for less than Starter.",
   },
   {
     q: "Can I turn CRM off?",

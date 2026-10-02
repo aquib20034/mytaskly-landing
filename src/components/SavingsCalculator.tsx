@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check } from "lucide-react";
 import { buildRegisterUrl, REGISTER_URL } from "@/lib/config";
 import { planYearlyAmount } from "@/lib/api/plans";
+import { recommendedPlanSlug } from "@/lib/packaging";
+import { usePublicPlans } from "@/lib/use-public-plans";
 import type { Plan } from "@/lib/types/plan";
 
 type AppPrice = {
@@ -45,15 +47,25 @@ function monthlyCost(app: AppPrice, people: number) {
 }
 
 export function SavingsCalculator({ plans }: { plans: Plan[] }) {
-  const priced = plans
+  const { plans: livePlans, status } = usePublicPlans(plans);
+  const priced = livePlans
     .map((plan) => ({ plan, year: planYearlyAmount(plan) }))
     .filter((item): item is { plan: Plan; year: number } => item.year !== null);
-  const popular = priced.find((item) => item.plan.is_popular) ?? priced[0];
-  const [planId, setPlanId] = useState(popular?.plan.id ?? "");
-  const chosen = priced.find((item) => item.plan.id === planId) ?? popular;
+  const popular = priced.find((item) => item.plan.slug === "growth") ?? priced.find((item) => item.plan.is_popular) ?? priced[0];
 
   const [people, setPeople] = useState(40);
   const [on, setOn] = useState(() => apps.map((app) => DEFAULT_ON.has(app.id)));
+  const selectedIds = apps.filter((_, index) => on[index]).map((app) => app.id);
+  const needsGrowth = recommendedPlanSlug(selectedIds) === "growth";
+  const recommended =
+    priced.find((item) => item.plan.slug === recommendedPlanSlug(selectedIds)) ?? popular;
+  const [planId, setPlanId] = useState("");
+  const [pinned, setPinned] = useState(false);
+  const chosen = (pinned ? priced.find((item) => item.plan.id === planId) : undefined) ?? recommended ?? popular;
+
+  useEffect(() => {
+    setPinned(false);
+  }, [recommended?.plan.id]);
   const fill = ((people - MIN_PEOPLE) / (MAX_PEOPLE - MIN_PEOPLE)) * 100;
 
   const yearly = useMemo(() => {
@@ -172,7 +184,10 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
                 <button
                   key={plan.id}
                   type="button"
-                  onClick={() => setPlanId(plan.id)}
+                  onClick={() => {
+                    setPinned(true);
+                    setPlanId(plan.id);
+                  }}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
                     chosen?.plan.id === plan.id
                       ? "bg-navy-950 text-white"
@@ -184,10 +199,17 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
               ))}
             </div>
           ) : null}
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+            {needsGrowth
+              ? "HubSpot, BambooHR, and Notion compare with Growth, where CRM, HR, and resources sit."
+              : "A board and chat compare with Starter, which includes projects, chat, and the client portal."}
+          </p>
           <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-muted">
             {chosen
               ? `MyTaskly ${chosen.plan.name} = $${money(yearly.mytasklyYear)} / year`
-              : "MyTaskly plan prices are unavailable"}
+              : status === "loading"
+                ? "Loading MyTaskly plans"
+                : "MyTaskly plan prices are unavailable"}
           </p>
           <div className="mt-5 rounded-2xl bg-[#f4f6fb] p-5">
             <div className="flex items-start justify-between gap-4">
@@ -199,7 +221,9 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
             <p className="mt-4 text-sm leading-relaxed text-ink-muted">
               {chosen
                 ? `MyTaskly ${chosen.plan.name} is $${money(yearly.mytasklyYear)} a year for the workspace. The selected apps list at $${money(yearly.stackYear)} a year for ${people} ${people === 1 ? "person" : "people"}.`
-                : "Workspace prices come from the MyTaskly plans list."}
+                : status === "loading"
+                  ? "Loading workspace prices from the MyTaskly plans list."
+                  : "Workspace prices come from the MyTaskly plans list."}
             </p>
           </div>
           <a

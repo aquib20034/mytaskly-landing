@@ -6,6 +6,7 @@ import {
   buildRegisterUrl,
   type BillingInterval,
 } from "@/lib/config";
+import { planPresentation, sortPlansForDisplay } from "@/lib/packaging";
 import type { Plan } from "@/lib/types/plan";
 
 function formatPrice(value: string | null, currency: string) {
@@ -21,11 +22,6 @@ function formatPrice(value: string | null, currency: string) {
 
 function planHasYearly(plan: Plan) {
   return plan.price_yearly !== null && Number(plan.price_yearly) > 0;
-}
-
-function displayOrNA(value: string | null | undefined) {
-  const trimmed = typeof value === "string" ? value.trim() : "";
-  return trimmed.length > 0 ? trimmed : "N/A";
 }
 
 function gridColsClass(count: number) {
@@ -72,7 +68,7 @@ export function PricingCards({ plans }: { plans: Plan[] }) {
           anyYearly ? "mt-10" : "mt-16"
         }`}
       >
-        {plans.map((plan) => (
+        {sortPlansForDisplay(plans).map((plan) => (
           <PricingCard
             key={plan.id}
             plan={plan}
@@ -91,7 +87,7 @@ function PricingCard({
   plan: Plan;
   billingInterval: BillingInterval;
 }) {
-  const isFeatured = plan.is_popular;
+  const isFeatured = planPresentation(plan).featured;
 
   if (isFeatured) {
     return (
@@ -126,14 +122,10 @@ function CardBody({
   billingInterval: BillingInterval;
   isFeatured?: boolean;
 }) {
-  const rawFeatures = Array.isArray(plan.features) ? plan.features : [];
-  const featureItems =
-    rawFeatures.length > 0
-      ? rawFeatures.map((f) => displayOrNA(f))
-      : ["N/A"];
-
-  const planName = displayOrNA(plan.name);
-  const planDescription = displayOrNA(plan.description);
+  const presentation = planPresentation(plan);
+  const featureItems = presentation.features;
+  const planName = plan.name.trim() || "Plan";
+  const planDescription = presentation.description;
   const useYearly =
     billingInterval === "yearly" &&
     planHasYearly(plan) &&
@@ -160,13 +152,15 @@ function CardBody({
         >
           {planName}
         </h3>
-        <p
-          className={`mt-1 text-sm ${
-            isFeatured ? "text-navy-100/70" : "text-ink-muted"
-          }`}
-        >
-          {planDescription}
-        </p>
+        {planDescription ? (
+          <p
+            className={`mt-1 text-sm ${
+              isFeatured ? "text-navy-100/70" : "text-ink-muted"
+            }`}
+          >
+            {planDescription}
+          </p>
+        ) : null}
       </div>
 
       <div className="mt-6 flex items-baseline gap-1">
@@ -206,22 +200,26 @@ function CardBody({
         )}
       </div>
 
-      <ul
-        className={`mt-6 flex-1 space-y-3 text-sm ${
-          isFeatured ? "text-navy-100/90" : "text-ink"
-        }`}
-      >
-        {featureItems.map((f, index) => (
-          <li key={`${f}-${index}`} className="flex items-start gap-2">
-            <Check
-              className={`mt-0.5 h-4 w-4 shrink-0 ${
-                isFeatured ? "text-navy-300" : "text-navy-600"
-              }`}
-            />
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
+      {featureItems.length > 0 ? (
+        <ul
+          className={`mt-6 flex-1 space-y-3 text-sm ${
+            isFeatured ? "text-navy-100/90" : "text-ink"
+          }`}
+        >
+          {featureItems.map((feature, index) => (
+            <li key={`${feature}-${index}`} className="flex items-start gap-2">
+              <Check
+                className={`mt-0.5 h-4 w-4 shrink-0 ${
+                  isFeatured ? "text-navy-300" : "text-navy-600"
+                }`}
+              />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="flex-1" />
+      )}
 
       <div className="mt-8 shrink-0">
         <a
