@@ -6,6 +6,11 @@ import {
   buildRegisterUrl,
   type BillingInterval,
 } from "@/lib/config";
+import {
+  MODULE_INCLUSIONS,
+  planDescription,
+  planFeatureList,
+} from "@/lib/plan-inclusions";
 import type { Plan } from "@/lib/types/plan";
 
 function formatPrice(value: string | null, currency: string) {
@@ -75,6 +80,8 @@ export function PricingCards({ plans }: { plans: Plan[] }) {
           />
         ))}
       </div>
+
+      <PlanModules plans={plans} />
     </>
   );
 }
@@ -112,6 +119,62 @@ function PricingCard({
   );
 }
 
+function PlanModules({ plans }: { plans: Plan[] }) {
+  const starter = plans.find((plan) => plan.slug === "starter");
+  const growth = plans.find((plan) => plan.slug === "growth");
+  if (!starter && !growth) return null;
+
+  const columns = [
+    starter ? { key: "starter" as const, name: starter.name } : null,
+    growth ? { key: "growth" as const, name: growth.name } : null,
+  ].filter((column) => column !== null);
+
+  return (
+    <div className="mx-auto mt-20 max-w-4xl">
+      <h3 className="text-center text-2xl font-semibold tracking-tight text-navy-900">
+        What each plan turns on
+      </h3>
+      <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-ink-muted">
+        HR and CRM stay on Growth. Inventory stays off both plans.
+      </p>
+      <div className="mt-8 overflow-hidden rounded-2xl border border-navy-100">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-paper text-navy-900">
+            <tr>
+              <th className="px-5 py-3 font-semibold">Module</th>
+              <th className="hidden px-5 py-3 font-semibold sm:table-cell">
+                In place of
+              </th>
+              {columns.map((column) => (
+                <th key={column.key} className="px-5 py-3 font-semibold">
+                  {column.name}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {MODULE_INCLUSIONS.map((row) => (
+              <tr key={row.module} className="border-t border-navy-100">
+                <td className="px-5 py-3 font-medium text-navy-900">
+                  {row.module}
+                </td>
+                <td className="hidden px-5 py-3 text-ink-muted sm:table-cell">
+                  {row.replaces}
+                </td>
+                {columns.map((column) => (
+                  <td key={column.key} className="px-5 py-3 text-ink">
+                    {row[column.key] ? "On" : "Off"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 function CardBody({
   plan,
   billingInterval,
@@ -121,11 +184,9 @@ function CardBody({
   billingInterval: BillingInterval;
   isFeatured?: boolean;
 }) {
-  const featureItems = (Array.isArray(plan.features) ? plan.features : [])
-    .map((feature) => feature.trim())
-    .filter((feature) => feature.length > 0);
+  const featureItems = planFeatureList(plan);
   const planName = plan.name.trim() || "Plan";
-  const planDescription = plan.description?.trim() ?? "";
+  const description = planDescription(plan);
   const useYearly =
     billingInterval === "yearly" &&
     planHasYearly(plan) &&
@@ -152,13 +213,13 @@ function CardBody({
         >
           {planName}
         </h3>
-        {planDescription ? (
+        {description ? (
           <p
             className={`mt-1 text-sm ${
               isFeatured ? "text-navy-100/70" : "text-ink-muted"
             }`}
           >
-            {planDescription}
+            {description}
           </p>
         ) : null}
       </div>

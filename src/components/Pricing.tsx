@@ -22,7 +22,8 @@ export async function Pricing() {
           </h2>
           <p className="mt-4 text-lg text-ink-muted">
             Each card is a current workspace plan. The name, price, and
-            description come from the live plans list.
+            description come from the live plans list. The lines under the
+            price are the modules that plan turns on.
           </p>
         </div>
 
