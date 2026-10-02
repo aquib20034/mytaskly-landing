@@ -1,11 +1,8 @@
 export const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL ||
-  (process.env.NODE_ENV === "production"
-    ? "https://app.mytaskly.io"
-    : "http://localhost:3000");
+  process.env.NEXT_PUBLIC_APP_URL || "https://app.mytaskly.io";
 
 export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+  process.env.NEXT_PUBLIC_API_URL || "https://api.mytaskly.io/api/v1";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||

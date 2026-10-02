@@ -1,19 +1,33 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_URL } from "@/lib/config";
+import { organizationJsonLd, softwareJsonLd } from "@/lib/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+const sans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mytaskly.io";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "MyTaskly — The operating system for software houses",
+  title: {
+    default: "MyTaskly — Projects, CRM, HR, and chat in one workspace",
+    template: "%s · MyTaskly",
+  },
   description:
-    "One platform for Project Management, CRM, and HR. Built for software houses and small businesses that are done paying for three tools that don't talk to each other.",
+    "MyTaskly is the workspace software houses use instead of a project tool, a CRM, an HR suite, and a chat app. Shared people, shared permissions, one subscription.",
+  keywords: [
+    "MyTaskly",
+    "project management",
+    "CRM",
+    "HR software",
+    "team chat",
+    "software house tools",
+    "all-in-one workspace",
+  ],
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/favicon.png", type: "image/png" },
@@ -23,9 +37,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
   },
   openGraph: {
-    title: "MyTaskly — The operating system for software houses",
+    title: "MyTaskly — Projects, CRM, HR, and chat in one workspace",
     description:
-      "One platform for Project Management, CRM, and HR. Built for software houses and small businesses.",
+      "Replace a stack of tools with one system for delivery, sales, people, and messages.",
     url: SITE_URL,
     siteName: "MyTaskly",
     type: "website",
@@ -33,11 +47,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "MyTaskly — The operating system for software houses",
+    title: "MyTaskly — Projects, CRM, HR, and chat in one workspace",
     description:
-      "One platform for Project Management, CRM, and HR. Built for software houses and small businesses.",
+      "Replace a stack of tools with one system for delivery, sales, people, and messages.",
     images: ["/logo.png"],
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -46,11 +61,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} font-sans antialiased`}
-    >
-      <body className="bg-white text-[color:var(--color-ink)]">{children}</body>
+    <html lang="en" className={`${sans.variable} font-sans antialiased`}>
+      <body className="bg-white text-[color:var(--color-ink)]">
+        <JsonLd data={[organizationJsonLd(), softwareJsonLd()]} />
+        {children}
+      </body>
     </html>
   );
 }

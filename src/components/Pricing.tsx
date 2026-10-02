@@ -36,14 +36,11 @@ export async function Pricing() {
             <p className="text-ink-muted">
               Unable to load pricing right now.
             </p>
-            <p className="mt-2 text-sm text-ink-muted">
-              Make sure the API is running at{" "}
-              <code className="rounded bg-navy-50 px-1.5 py-0.5 text-xs">
-                {process.env.NEXT_PUBLIC_API_URL ||
-                  "http://127.0.0.1:8000/api/v1"}
-              </code>
-              , then refresh.
-            </p>
+            {process.env.NODE_ENV !== "production" ? (
+              <p className="mt-2 text-sm text-ink-muted">
+                Make sure the API is running, then refresh.
+              </p>
+            ) : null}
             <a
               href={REGISTER_URL}
               className="mt-6 inline-flex h-11 items-center justify-center rounded-xl bg-navy-900 px-5 text-sm font-semibold text-white transition hover:bg-navy-800"

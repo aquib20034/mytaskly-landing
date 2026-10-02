@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { CHANGELOG, KIND_LABEL, type ChangelogItem } from "@/lib/changelog";
 
 export const metadata: Metadata = {
-  title: "Changelog — MyTaskly",
+  title: "Changelog",
   description:
     "What’s new in MyTaskly — product updates and recent release notes.",
 };
