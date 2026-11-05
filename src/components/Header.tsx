@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
-import { LOGIN_URL, REGISTER_URL } from "@/lib/config";
+import { DEMO_URL, LOGIN_URL, REGISTER_URL } from "@/lib/config";
 import { productPages } from "@/lib/site";
 
 const links = [
@@ -143,7 +143,15 @@ export function Header() {
             Sign in
           </a>
           <a
+            href={DEMO_URL}
+            data-track="book_call_header"
+            className="hidden h-9 items-center rounded-full border border-navy-200 px-4 text-sm font-semibold text-navy-950 transition hover:border-navy-400 md:inline-flex"
+          >
+            Book a call
+          </a>
+          <a
             href={REGISTER_URL}
+            data-track="start_free_header"
             className="inline-flex h-9 items-center rounded-full bg-navy-950 px-4 text-sm font-semibold text-white transition hover:bg-navy-800"
           >
             Start free

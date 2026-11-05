@@ -39,9 +39,9 @@ export const productPages = [
     points: [
       "Leads, contacts, companies, and deals",
       "Follow-ups, activities, and email threads",
-      "Templates, sequences, and auto replies",
+      "Email templates and auto replies (sequences coming soon)",
       "Sales dashboard for managers",
-      "Optional scraping agent for sourced leads",
+      "Optional lead research inbox for sourced leads",
     ],
     benefits: [
       "The pipeline sits next to the projects a deal creates",

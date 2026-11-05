@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { JsonLd } from "@/components/JsonLd";
+import { Analytics } from "@/components/Analytics";
 import { SITE_URL } from "@/lib/config";
 import { organizationJsonLd, softwareJsonLd } from "@/lib/site";
 
@@ -43,14 +44,12 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "MyTaskly",
     type: "website",
-    images: [{ url: "/logo.png", width: 512, height: 512, alt: "MyTaskly" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "MyTaskly — Projects, CRM, HR, and chat in one workspace",
     description:
       "Replace a stack of tools with one system for delivery, sales, people, and messages.",
-    images: ["/logo.png"],
   },
   robots: { index: true, follow: true },
 };
@@ -65,6 +64,7 @@ export default function RootLayout({
       <body className="bg-white text-[color:var(--color-ink)]">
         <JsonLd data={[organizationJsonLd(), softwareJsonLd()]} />
         {children}
+        <Analytics />
       </body>
     </html>
   );

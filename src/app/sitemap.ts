@@ -17,6 +17,7 @@ const paths = [
   ...posts.map((post) => `/blog/${post.slug}`),
   ...guides.map((guide) => `/learn/${guide.slug}`),
   "/changelog",
+  "/contact",
   "/privacy",
   "/terms",
 ];

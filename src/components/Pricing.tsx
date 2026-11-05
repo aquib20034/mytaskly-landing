@@ -1,5 +1,7 @@
 import { fetchPublicPlans } from "@/lib/api/plans";
 import { PricingResults } from "@/components/PricingResults";
+import { TrialTerms } from "@/components/TrialTerms";
+import { DEMO_URL } from "@/lib/config";
 
 export async function Pricing() {
   let plans: Awaited<ReturnType<typeof fetchPublicPlans>> = [];
@@ -21,17 +23,24 @@ export async function Pricing() {
             Flat pricing. No per-seat penalty.
           </h2>
           <p className="mt-4 text-lg text-ink-muted">
-            Each card is a current workspace plan. The name, price, and
-            description come from the live plans list. The lines under the
-            price are the modules that plan turns on.
+            One price covers the whole workspace. Add people without a
+            per-seat bill, and turn on only the modules your team uses.
           </p>
         </div>
 
         <PricingResults initialPlans={plans} />
 
-        <p className="mt-10 text-center text-sm text-ink-muted">
-          Billed monthly or yearly in USD. Paid plans continue to secure
-          checkout after you create your organization.
+        <TrialTerms className="mt-8 text-center text-sm" />
+        <p className="mt-6 text-center text-sm text-ink-muted">
+          Not sure which plan fits?{" "}
+          <a href={DEMO_URL} data-track="book_call_pricing" className="font-semibold text-navy-900 underline underline-offset-4">
+            Book a 15-minute setup call
+          </a>{" "}
+          and we&apos;ll set up your workspace with you.
+        </p>
+        <p className="mt-3 text-center text-xs text-ink-muted">
+          Billed monthly or yearly in USD. You choose a paid plan after you
+          create your workspace.
         </p>
       </div>
     </section>

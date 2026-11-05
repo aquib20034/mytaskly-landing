@@ -285,6 +285,7 @@ function CardBody({
       <div className="mt-8 shrink-0">
         <a
           href={ctaHref}
+          data-track={`start_plan_${plan.slug || "plan"}`}
           className={
             isFeatured
               ? "inline-flex h-11 w-full items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-navy-900 transition hover:bg-navy-50"

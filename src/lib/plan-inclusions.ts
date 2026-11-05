@@ -54,3 +54,23 @@ export function planFeatureList(plan: Plan): string[] {
   if (fromApi.length > 0) return fromApi;
   return INCLUSIONS[plan.slug] ?? [];
 }
+
+/**
+ * Modules each plan slug turns on, used by the savings calculator to compare a plan only
+ * with the apps it can actually replace. Covers today's plans and the proposed
+ * Free / Team / Business / Scale plans. An unknown slug is treated as covering everything.
+ */
+const MODULES_BY_PLAN: Record<string, string[]> = {
+  free: ["projects", "chat"],
+  starter: ["projects", "chat", "portal"],
+  team: ["projects", "chat", "portal"],
+  growth: ["projects", "chat", "portal", "crm", "hr", "resources", "developer"],
+  business: ["projects", "chat", "portal", "crm", "hr"],
+  scale: ["projects", "chat", "portal", "crm", "hr", "resources", "developer", "inventory"],
+};
+
+export function planCoversModules(slug: string, modules: string[]): boolean {
+  const included = MODULES_BY_PLAN[slug];
+  if (!included) return true;
+  return modules.every((module) => included.includes(module));
+}

@@ -158,8 +158,8 @@ body {
   margin-top: -8px;
   border-radius: 999px;
   background: #ffffff;
-  border: 3px solid #7c5cfc;
-  box-shadow: 0 2px 8px rgba(76, 47, 196, 0.25);
+  border: 3px solid #2a47b8;
+  box-shadow: 0 2px 8px rgba(28, 48, 128, 0.25);
   cursor: pointer;
 }
 
@@ -168,7 +168,7 @@ body {
   width: 22px;
   border-radius: 999px;
   background: #ffffff;
-  border: 3px solid #7c5cfc;
+  border: 3px solid #2a47b8;
   cursor: pointer;
 }
 
