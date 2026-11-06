@@ -20,6 +20,8 @@ const groups = {
   Company: [
     { label: "Savings", href: "/savings" },
     { label: "Pricing", href: "/pricing" },
+    { label: "MyTaskly vs Jira", href: "/compare/jira" },
+    { label: "MyTaskly vs Bitrix24", href: "/compare/bitrix24" },
     { label: "Contact", href: "/contact" },
     { label: "Book a setup call", href: DEMO_URL },
   ],

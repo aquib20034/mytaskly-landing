@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/config";
 import { guides, posts } from "@/lib/editorial";
+import { comparisons } from "@/lib/compare";
 
 const paths = [
   "",
@@ -16,6 +17,7 @@ const paths = [
   "/blog",
   ...posts.map((post) => `/blog/${post.slug}`),
   ...guides.map((guide) => `/learn/${guide.slug}`),
+  ...comparisons.map((item) => `/compare/${item.slug}`),
   "/changelog",
   "/contact",
   "/privacy",
