@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { LOGIN_URL, REGISTER_URL } from "@/lib/config";
+import { CONTACT_EMAIL, DEMO_URL, LOGIN_URL, REGISTER_URL } from "@/lib/config";
 
 const groups = {
   Product: [
@@ -20,6 +20,10 @@ const groups = {
   Company: [
     { label: "Savings", href: "/savings" },
     { label: "Pricing", href: "/pricing" },
+    { label: "MyTaskly vs Jira", href: "/compare/jira" },
+    { label: "MyTaskly vs Bitrix24", href: "/compare/bitrix24" },
+    { label: "Contact", href: "/contact" },
+    { label: "Book a setup call", href: DEMO_URL },
   ],
   Account: [
     { label: "Sign in", href: LOGIN_URL },
@@ -68,7 +72,9 @@ export function Footer() {
         </div>
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-navy-100 pt-6 text-xs text-ink-muted sm:flex-row sm:items-center">
           <span>© {new Date().getFullYear()} MyTaskly. All rights reserved.</span>
-          <span>One system for the work, the pipeline, and the people.</span>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-navy-900">
+            {CONTACT_EMAIL}
+          </a>
         </div>
       </div>
     </footer>

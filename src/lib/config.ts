@@ -26,3 +26,20 @@ export function buildRegisterUrl(
   url.searchParams.set("billing_interval", billingInterval);
   return url.toString();
 }
+
+/**
+ * Trial terms shown under every "Start free" button, for example
+ * "14-day free trial · No card needed". Leave empty until the terms are final:
+ * nothing is shown when it is empty, so the site never states terms that are not true.
+ */
+export const TRIAL_TERMS = process.env.NEXT_PUBLIC_TRIAL_TERMS?.trim() || "";
+
+/** Booking link for a 15-minute setup call (TidyCal, Cal.com, Calendly). Falls back to the contact page. */
+export const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL?.trim() || "/contact";
+
+/** Public contact address shown in the footer and on the contact page. */
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@mytaskly.io";
+
+/** Google Analytics 4 measurement ID (G-XXXXXXX). Analytics stay off when it is empty. */
+export const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim() || "";

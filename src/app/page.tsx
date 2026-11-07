@@ -8,7 +8,8 @@ import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { BoardScreen } from "@/components/ProductFrame";
 import { StoryRail } from "@/components/StoryRail";
 import { JsonLd } from "@/components/JsonLd";
-import { REGISTER_URL } from "@/lib/config";
+import { DEMO_URL, REGISTER_URL } from "@/lib/config";
+import { TrialTerms } from "@/components/TrialTerms";
 import { fetchPublicPlans } from "@/lib/api/plans";
 import { faqJsonLd, faqs, productPages } from "@/lib/site";
 
@@ -50,28 +51,32 @@ export default async function Page() {
         <section className="overflow-hidden bg-white">
           <div className="mx-auto max-w-6xl px-6 pb-8 pt-16 sm:pt-20">
             <p className="text-sm font-semibold text-navy-600">
-              Projects, CRM, HR, and chat
+              For software houses and agencies
             </p>
             <h1 className="mt-4 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-tight text-navy-950 sm:text-7xl">
-              One workspace for the whole company.
+              Run your software house on one system.
             </h1>
-            <p className="mt-5 max-w-xl text-2xl font-medium leading-snug text-ink-muted">
-              Less switching. Less spend. The work stays in context.
+            <p className="mt-5 max-w-2xl text-2xl font-medium leading-snug text-ink-muted">
+              Projects, clients, HR, payroll, and chat. One flat price for the whole team, not per seat.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href={REGISTER_URL}
+                data-track="start_free_hero"
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-navy-950 px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-navy-800"
               >
                 Start free
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <p className="text-sm leading-relaxed text-ink-muted">
-                Create a workspace.
-                <br />
-                Turn on the modules you need.
-              </p>
+              <a
+                href={DEMO_URL}
+                data-track="book_call_hero"
+                className="inline-flex h-12 items-center rounded-full border border-navy-200 bg-white px-6 text-sm font-semibold text-navy-950 transition hover:border-navy-400"
+              >
+                Book a 15-minute setup call
+              </a>
             </div>
+            <TrialTerms className="mt-3" />
           </div>
           <div className="mx-auto max-w-6xl px-6 pb-16">
             {hasPlatformImage ? (
@@ -101,7 +106,7 @@ export default async function Page() {
         <section className="bg-white py-20">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="max-w-2xl text-4xl font-semibold tracking-tight text-navy-950 sm:text-5xl">
-              Every job the stack was doing, on one permission model.
+              Stop paying for five tools that don&apos;t talk to each other.
             </h2>
             <div className="mt-10 grid gap-4 md:grid-cols-2">
               {productPages.map((page, index) => (
@@ -132,7 +137,7 @@ export default async function Page() {
         <section className="bg-white pb-8 pt-4">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="max-w-xl text-4xl font-semibold tracking-tight text-navy-950 sm:text-5xl">
-              The same system, four different desks.
+              How each team uses it.
             </h2>
             <div className="mt-8">
               <StoryRail />
@@ -185,12 +190,22 @@ export default async function Page() {
                 Projects, clients, and people. Shared from the first invite.
               </p>
             </div>
-            <a
-              href={REGISTER_URL}
-              className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-navy-950"
-            >
-              Start free
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={REGISTER_URL}
+                data-track="start_free_footer_cta"
+                className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-navy-950"
+              >
+                Start free
+              </a>
+              <a
+                href={DEMO_URL}
+                data-track="book_call_footer_cta"
+                className="inline-flex h-12 items-center rounded-full border border-white/30 px-6 text-sm font-semibold text-white hover:border-white/60"
+              >
+                Book a setup call
+              </a>
+            </div>
           </div>
         </section>
       </main>

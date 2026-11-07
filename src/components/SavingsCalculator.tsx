@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { buildRegisterUrl, REGISTER_URL } from "@/lib/config";
 import { planYearlyAmount } from "@/lib/api/plans";
+import { planCoversModules } from "@/lib/plan-inclusions";
 import { usePublicPlans } from "@/lib/use-public-plans";
 import type { Plan } from "@/lib/types/plan";
 
@@ -15,18 +16,20 @@ type AppPrice = {
   logo: string;
   pad?: boolean;
   floor?: { maxPeople: number; monthly: number };
+  /** The MyTaskly module that replaces this app. */
+  module: string;
 };
 
 /** Published list prices, 2026. Not a quote from the vendor. */
 const apps: AppPrice[] = [
-  { id: "jira", name: "Jira", plan: "Standard", price: 9.05, logo: "/brands/jira.svg", pad: true },
-  { id: "asana", name: "Asana", plan: "Starter", price: 10.99, logo: "/brands/asana.png" },
-  { id: "monday", name: "monday.com", plan: "Basic", price: 9, logo: "/brands/monday.png" },
-  { id: "hubspot", name: "HubSpot", plan: "Sales Starter", price: 20, logo: "/brands/hubspot.png" },
-  { id: "bamboohr", name: "BambooHR", plan: "Core", price: 10, logo: "/brands/bamboohr.png", floor: { maxPeople: 25, monthly: 250 } },
-  { id: "slack", name: "Slack", plan: "Pro", price: 8.75, logo: "/brands/slack.png" },
-  { id: "notion", name: "Notion", plan: "Plus", price: 12, logo: "/brands/notion.png" },
-  { id: "toggl", name: "Toggl Track", plan: "Starter", price: 9, logo: "/brands/toggl.png" },
+  { id: "jira", module: "projects", name: "Jira", plan: "Standard", price: 9.05, logo: "/brands/jira.svg", pad: true },
+  { id: "asana", module: "projects", name: "Asana", plan: "Starter", price: 10.99, logo: "/brands/asana.png" },
+  { id: "monday", module: "projects", name: "monday.com", plan: "Basic", price: 9, logo: "/brands/monday.png" },
+  { id: "hubspot", module: "crm", name: "HubSpot", plan: "Sales Starter", price: 20, logo: "/brands/hubspot.png" },
+  { id: "bamboohr", module: "hr", name: "BambooHR", plan: "Core", price: 10, logo: "/brands/bamboohr.png", floor: { maxPeople: 25, monthly: 250 } },
+  { id: "slack", module: "chat", name: "Slack", plan: "Pro", price: 8.75, logo: "/brands/slack.png" },
+  { id: "notion", module: "resources", name: "Notion", plan: "Plus", price: 12, logo: "/brands/notion.png" },
+  { id: "toggl", module: "projects", name: "Toggl Track", plan: "Starter", price: 9, logo: "/brands/toggl.png" },
 ];
 
 const DEFAULT_ON = new Set(["jira", "hubspot", "bamboohr", "slack"]);
@@ -50,15 +53,22 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
   const priced = livePlans
     .map((plan) => ({ plan, year: planYearlyAmount(plan) }))
     .filter((item): item is { plan: Plan; year: number } => item.year !== null);
-  const popular = priced.find((item) => item.plan.is_popular) ?? priced[0];
-  const [planId, setPlanId] = useState(popular?.plan.id ?? "");
-  const chosen = priced.find((item) => item.plan.id === planId) ?? popular;
-
   const [people, setPeople] = useState(40);
   const [on, setOn] = useState(() => apps.map((app) => DEFAULT_ON.has(app.id)));
+  const [manualId, setManualId] = useState<string | null>(null);
+
+  // Compare against the cheapest plan that includes every module the ticked apps need,
+  // so the saving is never measured against a plan that cannot replace those apps.
+  const needed = Array.from(new Set(apps.filter((_, index) => on[index]).map((app) => app.module)));
+  const covering = priced
+    .filter((item) => planCoversModules(item.plan.slug, needed))
+    .sort((a, b) => a.year - b.year);
+  const fallback = covering[0] ?? priced.find((item) => item.plan.is_popular) ?? priced[0];
+  const chosen = priced.find((item) => item.plan.id === manualId) ?? fallback;
+  const chosenCovers = chosen ? planCoversModules(chosen.plan.slug, needed) : true;
   const fill = ((people - MIN_PEOPLE) / (MAX_PEOPLE - MIN_PEOPLE)) * 100;
 
-  const yearly = useMemo(() => {
+  const yearly = (() => {
     const selected = apps.filter((_, index) => on[index]);
     const stackYear = selected.reduce((sum, app) => sum + monthlyCost(app, people) * 12, 0);
     const mytasklyYear = chosen?.year ?? 0;
@@ -68,7 +78,7 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
       mytasklyYear,
       saved: chosen ? Math.max(stackYear - mytasklyYear, 0) : 0,
     };
-  }, [people, on, chosen]);
+  })();
 
   return (
     <div className="rounded-[32px] bg-[#f4f6fb] p-4 sm:p-6 lg:p-8">
@@ -101,7 +111,7 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
                     />
                   </span>
                   {active ? (
-                    <span className="absolute right-1 top-0 grid h-5 w-5 place-items-center rounded-full bg-[#7c5cfc] text-white ring-2 ring-white">
+                    <span className="absolute right-1 top-0 grid h-5 w-5 place-items-center rounded-full bg-[#2a47b8] text-white ring-2 ring-white">
                       <Check className="h-3 w-3" strokeWidth={3} />
                     </span>
                   ) : null}
@@ -112,10 +122,10 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
               );
             })}
           </div>
-          <div className="mt-6 rounded-2xl border border-[#e4e0f4] bg-white px-4 py-4">
+          <div className="mt-6 rounded-2xl border border-[#dfe6fb] bg-white px-4 py-4">
             <div className="flex items-center justify-between gap-3">
               <span className="text-sm font-medium text-navy-950">People at your company</span>
-              <span className="text-base font-semibold text-[#6d4aff]">
+              <span className="text-base font-semibold text-[#1c3080]">
                 {people} {people === 1 ? "person" : "people"}
               </span>
             </div>
@@ -127,7 +137,7 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
               onChange={(event) => setPeople(Number(event.target.value))}
               className="savings-range mt-4 w-full"
               style={{
-                background: `linear-gradient(90deg, #7c5cfc ${fill}%, #e6e3f4 ${fill}%)`,
+                background: `linear-gradient(90deg, #2a47b8 ${fill}%, #dfe6fb ${fill}%)`,
               }}
               aria-label="Number of people"
               aria-valuemin={MIN_PEOPLE}
@@ -174,7 +184,7 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
                 <button
                   key={plan.id}
                   type="button"
-                  onClick={() => setPlanId(plan.id)}
+                  onClick={() => setManualId(plan.id)}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
                     chosen?.plan.id === plan.id
                       ? "bg-navy-950 text-white"
@@ -185,6 +195,11 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
                 </button>
               ))}
             </div>
+          ) : null}
+          {chosen && !chosenCovers ? (
+            <p className="mt-3 text-xs text-navy-700">
+              {`${chosen.plan.name} doesn't include every module these apps need${covering[0] ? `. ${covering[0].plan.name} does.` : "."}`}
+            </p>
           ) : null}
           <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-muted">
             {chosen
@@ -217,6 +232,7 @@ export function SavingsCalculator({ plans }: { plans: Plan[] }) {
                   )
                 : REGISTER_URL
             }
+            data-track="start_saving_calculator"
             className="mt-4 flex h-12 items-center justify-center rounded-full bg-navy-950 text-sm font-semibold text-white hover:bg-navy-800"
           >
             Start saving with MyTaskly
