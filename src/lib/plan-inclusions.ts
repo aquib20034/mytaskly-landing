@@ -2,7 +2,7 @@ import type { Plan } from "@/lib/types/plan";
 
 /** Shown only when the live plan has no description. */
 const DESCRIPTIONS: Record<string, string> = {
-  starter: "For teams that need projects, chat, and a client portal.",
+  starter: "For teams that need projects, timelines, and team chat.",
 };
 
 /** What each public plan turns on. Prices stay on the plan records. */
@@ -10,15 +10,13 @@ const INCLUSIONS: Record<string, string[]> = {
   starter: [
     "Projects and timelines",
     "Team chat",
-    "Client portal",
     "One workspace invoice",
   ],
   growth: [
     "Everything in Starter",
     "CRM",
-    "HR: directory, attendance, leave, and payroll",
+    "HR: directory, attendance, shifts, leave, and payroll records",
     "Resources",
-    "Developer tools",
   ],
 };
 
@@ -32,11 +30,9 @@ export type ModuleInclusion = {
 export const MODULE_INCLUSIONS: ModuleInclusion[] = [
   { module: "Projects", replaces: "Jira, Asana, monday.com", starter: true, growth: true },
   { module: "Chat", replaces: "Slack", starter: true, growth: true },
-  { module: "Client portal", replaces: "A separate client login", starter: true, growth: true },
   { module: "CRM", replaces: "HubSpot Sales Hub", starter: false, growth: true },
   { module: "HR", replaces: "BambooHR", starter: false, growth: true },
   { module: "Resources", replaces: "A separate docs tool", starter: false, growth: true },
-  { module: "Developer tools", replaces: "A software-house extra", starter: false, growth: true },
   { module: "Inventory", replaces: "No separate app in this set", starter: false, growth: false },
 ];
 
@@ -62,11 +58,11 @@ export function planFeatureList(plan: Plan): string[] {
  */
 const MODULES_BY_PLAN: Record<string, string[]> = {
   free: ["projects", "chat"],
-  starter: ["projects", "chat", "portal"],
-  team: ["projects", "chat", "portal"],
-  growth: ["projects", "chat", "portal", "crm", "hr", "resources", "developer"],
-  business: ["projects", "chat", "portal", "crm", "hr"],
-  scale: ["projects", "chat", "portal", "crm", "hr", "resources", "developer", "inventory"],
+  starter: ["projects", "chat"],
+  team: ["projects", "chat"],
+  growth: ["projects", "chat", "crm", "hr", "resources"],
+  business: ["projects", "chat", "crm", "hr"],
+  scale: ["projects", "chat", "crm", "hr", "resources", "inventory"],
 };
 
 export function planCoversModules(slug: string, modules: string[]): boolean {

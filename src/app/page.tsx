@@ -23,7 +23,8 @@ const ribbon = [
   "Payroll",
   "Team chat",
   "Roles",
-  "Client portal",
+  "Shifts",
+  "Inventory",
 ];
 
 const tones = [
@@ -65,7 +66,7 @@ export default async function Page() {
                 data-track="start_free_hero"
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-navy-950 px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-navy-800"
               >
-                Start free
+                Get started
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
@@ -196,7 +197,7 @@ export default async function Page() {
                 data-track="start_free_footer_cta"
                 className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-navy-950"
               >
-                Start free
+                Get started
               </a>
               <a
                 href={DEMO_URL}

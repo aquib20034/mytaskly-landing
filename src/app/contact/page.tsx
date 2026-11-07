@@ -58,7 +58,7 @@ export default function ContactPage() {
               data-track="start_free_contact"
               className="rounded-3xl bg-white p-6 shadow-card transition hover:-translate-y-0.5"
             >
-              <p className="text-lg font-semibold text-navy-950">Start free</p>
+              <p className="text-lg font-semibold text-navy-950">Get started</p>
               <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                 Create a workspace and turn on the modules you need.
               </p>

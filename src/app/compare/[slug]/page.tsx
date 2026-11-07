@@ -113,11 +113,11 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           <div className="rounded-[32px] border border-navy-100 p-8 sm:p-10">
             <h2 className="text-3xl font-semibold tracking-tight text-navy-950">Try it on your own team.</h2>
             <p className="mt-3 max-w-2xl text-base text-ink-muted">
-              Start free, or book a 15-minute call and we&apos;ll set up your workspace with you.
+              Get started, or book a 15-minute call and we&apos;ll set up your workspace with you.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={REGISTER_URL} data-track={`start_free_compare_${item.slug}`} className="inline-flex h-12 items-center rounded-full bg-navy-950 px-6 text-sm font-semibold text-white hover:bg-navy-800">
-                Start free
+                Get started
               </a>
               <a href={DEMO_URL} data-track={`book_call_compare_${item.slug}`} className="inline-flex h-12 items-center rounded-full border border-navy-200 px-6 text-sm font-semibold text-navy-950 hover:border-navy-400">
                 Book a setup call

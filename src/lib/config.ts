@@ -28,7 +28,7 @@ export function buildRegisterUrl(
 }
 
 /**
- * Trial terms shown under every "Start free" button, for example
+ * Trial terms shown under every sign-up button, for example
  * "14-day free trial · No card needed". Leave empty until the terms are final:
  * nothing is shown when it is empty, so the site never states terms that are not true.
  */

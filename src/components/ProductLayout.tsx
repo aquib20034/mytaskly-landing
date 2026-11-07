@@ -63,7 +63,7 @@ export function ProductLayout({
                   href={REGISTER_URL}
                   className="inline-flex h-11 items-center gap-2 rounded-full bg-navy-950 px-5 text-sm font-semibold text-white hover:bg-navy-800"
                 >
-                  Start free
+                  Get started
                   <ArrowRight className="h-4 w-4" />
                 </a>
                 <Link
