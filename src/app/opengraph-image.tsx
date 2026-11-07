@@ -6,7 +6,7 @@ export const contentType = "image/png";
 
 /** The link preview used on LinkedIn, X, WhatsApp and Slack. */
 export default function OpengraphImage() {
-  const modules = ["Projects", "CRM", "HR and payroll", "Chat", "Client portal"];
+  const modules = ["Projects", "CRM", "HR and payroll", "Chat", "Inventory"];
   return new ImageResponse(
     (
       <div
