@@ -49,11 +49,11 @@ export default function TermsPage() {
         period. Fees are non-refundable except where required by law.
       </p>
 
-      <h2>5. Free trial</h2>
+      <h2>5. Trials</h2>
       <p>
-        New workspaces get a 14-day free trial. At trial end, you must select
-        a paid plan to keep the workspace active, or your data becomes
-        read-only and is deleted after 30 days if no plan is selected.
+        We may offer a free trial for new workspaces. When we do, its length
+        and what happens when it ends are shown before you sign up. Paid
+        plans are billed from the moment you complete checkout.
       </p>
 
       <h2>6. Service availability</h2>

@@ -26,7 +26,7 @@ export const comparisons: Comparison[] = [
     description:
       "Jira tracks engineering work. MyTaskly runs the whole software house: projects, client portal, CRM, HR and chat in one workspace, at one price for the team.",
     answer:
-      "Choose Jira if you only need deep issue tracking for engineers. Choose MyTaskly if you also run sales, client approvals, attendance, leave and payroll, and want them in the same place as the projects.",
+      "Choose Jira if you only need deep issue tracking for engineers. Choose MyTaskly if you also run sales, attendance, leave and payroll, and want them in the same place as the projects.",
     rows: [
       { label: "What it covers", mytaskly: "Projects, client portal, CRM, HR (attendance, leave, payroll) and team chat", them: "Project and issue tracking" },
       { label: "Pricing model", mytaskly: "One flat price per workspace", them: "Per user, per month (Standard listed at $9.05 per user in 2026)" },

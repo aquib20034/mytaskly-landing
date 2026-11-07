@@ -103,7 +103,7 @@ export const faqs = [
   },
   {
     q: "Can I turn CRM off?",
-    a: "Yes. Platform admins enable modules per company. If CRM is off, the sales dashboard and CRM menu stay hidden. The same switch exists for Chat, Resources, HR, inventory, and the client portal.",
+    a: "Yes. Platform admins enable modules per company. If CRM is off, the sales dashboard and CRM menu stay hidden. The same switch exists for Chat, Resources, HR, and inventory.",
   },
   {
     q: "Who is MyTaskly for?",

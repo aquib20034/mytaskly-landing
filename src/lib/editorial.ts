@@ -29,7 +29,7 @@ export const posts: Article[] = [
     date: "2026-10-02",
     kicker: "Product",
     paragraphs: [
-      "MyTaskly is not one screen for every employee. A company turns modules on: projects, CRM, HR, chat, resources, inventory, the client portal, and developer tools. A person then gets a role inside that company.",
+      "MyTaskly is not one screen for every employee. A company turns modules on: projects, CRM, HR, chat, resources, and inventory. A person then gets a role inside that company.",
       "If CRM is off, the sales dashboard and the CRM menu stay hidden, including for someone who would otherwise see sales. If chat is off, the messenger and its unread count stay out of the sidebar. The same switch exists for HR and resources.",
       "Inside an enabled module, the role still matters. A member without HR access does not open the employee directory. An invite can require a reporting manager when the role asks for one. The Member role always asks. A custom role can be set to ask as well.",
     ],
@@ -86,7 +86,7 @@ export const guides: Article[] = [
     kicker: "CRM",
     paragraphs: [
       "CRM is available when the company has the module on. Leads, contacts, companies, and deals share the workspace with projects.",
-      "Log a follow-up or an activity on the record you are working. Templates, sequences, and auto replies cover the repeated outreach. Managers open the sales dashboard for the numbers.",
+      "Log a follow-up or an activity on the record you are working. Templates and auto replies cover the repeated outreach; sequences are coming soon. Managers open the sales dashboard for the numbers.",
       "If the company turns CRM off, those menus and the sales dashboard are hidden. A reporting manager does not keep a sales link that the company has disabled.",
     ],
   },
