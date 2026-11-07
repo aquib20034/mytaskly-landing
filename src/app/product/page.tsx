@@ -8,15 +8,13 @@ import { productMetadata } from "@/components/ProductLayout";
 
 export const metadata: Metadata = productMetadata(
   "Product",
-  "MyTaskly covers projects, CRM, HR, chat, resources, inventory, a client portal, and developer tools. Turn modules on for each company.",
+  "MyTaskly covers projects, CRM, HR, chat, resources, and inventory. Turn modules on for each company.",
   "/product",
 );
 
 const extras = [
   ["Resources", "See who is allocated across projects before you promise a date."],
   ["Inventory", "Track stock beside the operations team that uses it."],
-  ["Client portal", "Give a client a window into their work without a full seat."],
-  ["Developer tools", "Keep engineering utilities next to the delivery board."],
   ["Roles", "Organization roles decide menus, dashboards, and who must name a reporting manager."],
   ["Modules", "A company can disable CRM, chat, or HR. The menu follows that switch."],
 ];
@@ -43,8 +41,7 @@ export default function ProductPage() {
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">
               MyTaskly is a workspace for software houses and small businesses.
               Projects, the pipeline, people operations, and chat share members
-              and roles. Extra modules cover resources, inventory, a client
-              portal, and developer tools.
+              and roles. Extra modules cover resources and inventory.
             </p>
           </div>
         </section>

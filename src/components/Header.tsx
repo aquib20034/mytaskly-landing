@@ -154,7 +154,7 @@ export function Header() {
             data-track="start_free_header"
             className="inline-flex h-9 items-center rounded-full bg-navy-950 px-4 text-sm font-semibold text-white transition hover:bg-navy-800"
           >
-            Start free
+            Get started
           </a>
           <button
             type="button"
